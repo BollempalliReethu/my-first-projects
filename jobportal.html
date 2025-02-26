@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            color: black;
+        }
+        input, textarea, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #2575fc;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .job-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .job-item {
+            background: #f3f3f3;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function addJob() {
+            const jobTitle = document.getElementById("jobTitle").value;
+            const experience = document.getElementById("experience").value;
+            const description = document.getElementById("description").value;
+            
+            if (jobTitle && experience && description) {
+                const jobList = document.getElementById("jobList");
+                const jobItem = document.createElement("div");
+                jobItem.classList.add("job-item");
+                jobItem.innerHTML = `
+                    <div>
+                        <h3>${jobTitle}</h3>
+                        <p>Experience: ${experience}</p>
+                        <p>Description: ${description}</p>
+                        <button>Apply Now</button>
+                    </div>
+                    <button onclick="this.parentElement.remove()">Delete</button>
+                `;
+                jobList.appendChild(jobItem);
+                
+                document.getElementById("jobTitle").value = "";
+                document.getElementById("experience").value = "";
+                document.getElementById("description").value = "";
+            } else {
+                alert("Please fill in all fields before posting the job.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Job Portal</h2>
+        <select id="jobTitle">
+            <option value="">Select Job Title</option>
+            <option value="Application Security Administrator">Application Security Administrator</option>
+            <option value="Artificial Intelligence Security Specialist">Artificial Intelligence Security Specialist</option>
+            <option value="Back-end Developer">Back-end Developer</option>
+            <option value="Cloud Security Specialist">Cloud Security Specialist</option>
+            <option value="Cloud Software Architect">Cloud Software Architect</option>
+            <option value="Cloud Software Developer">Cloud Software Developer</option>
+            <option value="Cloud System Administrator">Cloud System Administrator</option>
+            <option value="Cloud System Engineer">Cloud System Engineer</option>
+            <option value="Computer Systems Manager">Computer Systems Manager</option>
+            <option value="Cryptographer">Cryptographer</option>
+            <option value="Cyberintelligence Specialist">Cyberintelligence Specialist</option>
+            <option value="Cybersecurity Hardware Engineer">Cybersecurity Hardware Engineer</option>
+            <option value="Data Privacy Officer">Data Privacy Officer</option>
+            <option value="Data Quality Manager">Data Quality Manager</option>
+            <option value="Database Administrator">Database Administrator</option>
+            <option value="Database Analyst">Database Analyst</option>
+            <option value="Database Report Writer">Database Report Writer</option>
+            <option value="DevOps Engineer">DevOps Engineer</option>
+            <option value="Digital Forensics Analyst">Digital Forensics Analyst</option>
+            <option value="Front-end Developer">Front-end Developer</option>
+            <option value="Full-stack Developer">Full-stack Developer</option>
+            <option value="IT Coordinator">IT Coordinator</option>
+            <option value="IT Security Engineer">IT Security Engineer</option>
+            <option value="Information Assurance Analyst">Information Assurance Analyst</option>
+            <option value="Java Developer">Java Developer</option>
+            <option value="Network Administrator">Network Administrator</option>
+            <option value="Network Architect">Network Architect</option>
+            <option value="Network Engineer">Network Engineer</option>
+            <option value="Platform Engineer">Platform Engineer</option>
+            <option value="Release Manager">Release Manager</option>
+            <option value="Reliability Engineer">Reliability Engineer</option>
+            <option value="Security Systems Administrator">Security Systems Administrator</option>
+            <option value="Service Desk Analyst">Service Desk Analyst</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Software Quality Assurance Analyst">Software Quality Assurance Analyst</option>
+            <option value="SQL Database Administrator">SQL Database Administrator</option>
+            <option value="System Administrator">System Administrator (SysAdmin)</option>
+            <option value="Systems Analyst">Systems Analyst</option>
+            <option value="UI Designer">UI (User Interface) Designer</option>
+            <option value="UX Designer">UX (User Experience) Designer</option>
+            <option value="Web Developer">Web Developer</option>
+            <option value="Wireless Network Engineer">Wireless Network Engineer</option>
+        </select>
+        <select id="experience">
+            <option value="">Years of Experience</option>
+            <option value="0-2">0-2 years</option>
+            <option value="2-4">2-4 years</option>
+            <option value="5-7">5-7 years</option>
+            <option value="8-10">8-10 years</option>
+            <option value="10+">10+ years</option>
+        </select>
+        <textarea id="description" placeholder="Enter job description..."></textarea>
+        <button onclick="addJob()">Post Job</button>
+        <div class="job-list" id="jobList"></div>
+    </div>
+</body>
+</html>
