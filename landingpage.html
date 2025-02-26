@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Jewelry</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://thumbs.dreamstime.com/b/minimalist-home-aesthetics-fashion-jewellery-candles-setting-white-background-feminine-trendy-305855542.jpg') no-repeat center center/cover;
+            text-align: center;
+            color: #5a4a42;
+            position: relative;
+            background-color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(90, 74, 66, 0.2);
+            background: none;
+            border: none;
+        }
+        .title-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 15px;
+            display: inline-block;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(to right, black, brown);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Dancing Script', cursive;
+            font-weight: bold;
+        }
+        .bio-container {
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 0;
+            border-radius: 5px;
+        }
+        .bio-text {
+            display: inline-block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: linear-gradient(to right, black, brown);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: scrollText 20s linear infinite;
+        }
+        @keyframes scrollText {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: linear-gradient(to right, black, brown);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-flex;
+            align-items: center;
+        }
+        .social-links img {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+        .contact-form {
+            margin-top: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #d1bfa3;
+            border-radius: 5px;
+            background-color: #f9f5f0;
+        }
+        button {
+            background-color: #8b6f56;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #a07c64;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function showThankYou(event) {
+            event.preventDefault();
+            alert("Thank You!");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title-box">
+            <h1>Elegant Minimalist Jewelry</h1>
+        </div>
+        <div class="bio-container">
+            <p class="bio-text">Luxury meets simplicity – timeless, handcrafted jewelry for the modern soul.</p>
+        </div>
+        
+        <div class="social-links">
+            <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUGzX-rB-ZJsRH-zjBHCQC8XWAsjDj_4jAvA&s" alt="Instagram Icon"> Instagram</a>
+            <a href="#"><img src="https://cdn-icons-png.freepik.com/256/5968/5968764.png?semt=ais_hybrid" alt="Facebook Icon"> Facebook</a>
+            <a href="#"><img src="https://cdn-icons-png.freepik.com/256/2496/2496110.png?semt=ais_hybrid" alt="Twitter Icon"> Twitter</a>
+        </div>
+        
+        <div class="contact-form">
+            <h2 style="background: linear-gradient(to right, black, brown); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Contact Us</h2>
+            <form onsubmit="showThankYou(event)">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
