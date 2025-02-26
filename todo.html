@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            background: linear-gradient(to right, blue, seagreen);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: blue;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #e0e0e0;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .delete-btn, .done-btn {
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+        .done-btn {
+            background: green;
+            color: white;
+        }
+        #taskMessage {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+        <p id="taskMessage"></p>
+    </div>
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let taskText = taskInput.value.trim();
+            if (taskText === "") return;
+
+            let li = document.createElement("li");
+            li.textContent = taskText;
+
+            let doneBtn = document.createElement("button");
+            doneBtn.textContent = "✔ Done";
+            doneBtn.classList.add("done-btn");
+            doneBtn.onclick = function() {
+                document.getElementById("taskMessage").textContent = "Task Accomplished! ✔";
+                setTimeout(() => {
+                    document.getElementById("taskMessage").textContent = "";
+                }, 2000);
+                li.remove();
+            };
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.onclick = function() {
+                li.remove();
+            };
+
+            li.appendChild(doneBtn);
+            li.appendChild(deleteBtn);
+            document.getElementById("taskList").appendChild(li);
+
+            taskInput.value = "";
+        }
+    </script>
+</body>
+</html>
