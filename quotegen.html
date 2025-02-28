@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&family=Pacifico&family=Lobster&family=Indie+Flower&display=swap');
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            margin: 0;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-decoration: underline;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            width: 350px;
+            background: transparent;
+            box-shadow: none;
+        }
+        #quote {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            font-size: 24px;
+            font-weight: bold;
+            min-height: 60px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #6a0572;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Random Quote Generator</h2>
+    <div class="container">
+        <p id="quote">Click the button to generate a quote!</p>
+        <button onclick="generateQuote()">New Quote</button>
+    </div>
+    
+    <script>
+        const quotes = [
+            { text: "The best way to predict the future is to create it.", font: "'Playfair Display', serif" },
+            { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", font: "'Roboto', sans-serif" },
+            { text: "Don't watch the clock; do what it does. Keep going.", font: "'Pacifico', cursive" },
+            { text: "Believe you can and you're halfway there.", font: "'Lobster', cursive" },
+            { text: "Act as if what you do makes a difference. It does.", font: "'Indie Flower', cursive" },
+            { text: "Happiness depends upon ourselves.", font: "'Playfair Display', serif" },
+            { text: "Dream big and dare to fail.", font: "'Roboto', sans-serif" },
+            { text: "You are never too old to set another goal or to dream a new dream.", font: "'Pacifico', cursive" },
+            { text: "In the middle of every difficulty lies opportunity.", font: "'Lobster', cursive" },
+            { text: "Your time is limited, so don’t waste it living someone else’s life.", font: "'Indie Flower', cursive" },
+            { text: "Opportunities don't happen. You create them.", font: "'Playfair Display', serif" },
+            { text: "The only way to do great work is to love what you do.", font: "'Roboto', sans-serif" },
+            { text: "Everything you’ve ever wanted is on the other side of fear.", font: "'Pacifico', cursive" },
+            { text: "Success is getting what you want. Happiness is wanting what you get.", font: "'Lobster', cursive" },
+            { text: "If you want to achieve greatness stop asking for permission.", font: "'Indie Flower', cursive" }
+        ];
+        
+        function generateQuote() {
+            let quoteElement = document.getElementById("quote");
+            let randomIndex = Math.floor(Math.random() * quotes.length);
+            let selectedQuote = quotes[randomIndex];
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                quoteElement.innerText = selectedQuote.text;
+                quoteElement.style.fontFamily = selectedQuote.font;
+                quoteElement.style.opacity = 1;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
