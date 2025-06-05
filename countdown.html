@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Countdown Scheduler</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #8b5e3c;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #704428;
+    }
+    #events-list {
+      margin-top: 20px;
+    }
+    .event {
+      background: #fff9f2;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 5px solid #a0522d;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .delete-btn, .edit-btn {
+      position: absolute;
+      top: 10px;
+      padding: 5px 10px;
+      font-size: 12px;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .delete-btn {
+      right: 10px;
+      background-color: #ff5c5c;
+    }
+    .delete-btn:hover {
+      background-color: #d63031;
+    }
+    .edit-btn {
+      right: 80px;
+      background-color: #3498db;
+    }
+    .edit-btn:hover {
+      background-color: #2471a3;
+    }
+    .dark-mode {
+      background: #2c2c2c;
+      color: #f1f1f1;
+    }
+    .dark-mode .event {
+      background: #3e3e3e;
+      border-left-color: #ffa07a;
+    }
+    .theme-toggle {
+      float: right;
+      margin-top: -50px;
+      cursor: pointer;
+      font-size: 20px;
+      background: transparent;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="theme-toggle" id="toggle-theme">🌙</button>
+    <h1>📅 Event Countdown Scheduler</h1>
+    <form id="event-form">
+      <input type="text" id="title" placeholder="Event Title" required />
+      <input type="datetime-local" id="datetime" required />
+      <button type="submit">Add Event</button>
+    </form>
+    <div id="events-list"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('event-form');
+    const list = document.getElementById('events-list');
+    const themeToggle = document.getElementById('toggle-theme');
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+
+    function saveEvents() {
+      localStorage.setItem('events', JSON.stringify(events));
+    }
+
+    function renderAllEvents() {
+      list.innerHTML = '';
+      events.forEach((event, i) => renderEvent(event, i));
+    }
+
+    function renderEvent(eventObj, index) {
+      const eventDiv = document.createElement('div');
+      eventDiv.className = 'event';
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.onclick = () => {
+        clearInterval(eventObj.interval);
+        events.splice(index, 1);
+        saveEvents();
+        renderAllEvents();
+      };
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'edit-btn';
+      editBtn.textContent = 'Edit';
+      editBtn.onclick = () => {
+        const newTitle = prompt("Edit title:", eventObj.title);
+        const newDate = prompt("Edit date and time (yyyy-mm-ddThh:mm):", eventObj.datetime);
+        if (newTitle && newDate) {
+          eventObj.title = newTitle;
+          eventObj.datetime = newDate;
+          saveEvents();
+          renderAllEvents();
+        }
+      };
+
+      eventDiv.appendChild(deleteBtn);
+      eventDiv.appendChild(editBtn);
+
+      const interval = setInterval(() => {
+        const now = new Date();
+        const target = new Date(eventObj.datetime);
+        const diff = target - now;
+
+        if (diff <= 0) {
+          eventDiv.innerHTML = `<strong>${eventObj.title}</strong><br>🎉 Event Started!`;
+          eventDiv.appendChild(deleteBtn);
+          eventDiv.appendChild(editBtn);
+          clearInterval(interval);
+          return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        eventDiv.innerHTML = `<strong>${eventObj.title}</strong><br>Time Left: ${d}d ${h}h ${m}m ${s}s`;
+        eventDiv.appendChild(deleteBtn);
+        eventDiv.appendChild(editBtn);
+      }, 1000);
+
+      eventObj.interval = interval;
+      list.appendChild(eventDiv);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const datetime = document.getElementById('datetime').value;
+
+      if (!title || !datetime) return;
+
+      const eventObj = { title, datetime };
+      events.push(eventObj);
+      saveEvents();
+      renderAllEvents();
+
+      form.reset();
+    });
+
+    // Theme toggle
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeToggle.textContent = '☀️';
+    }
+
+    // Initial render
+    renderAllEvents();
+  </script>
+</body>
+</html>
